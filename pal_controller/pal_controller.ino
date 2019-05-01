@@ -4,6 +4,7 @@
 const int BUTTON_COUNT = 4;
 int active_button = -1;
 int last_active_button = -1;
+int ledPin[BUTTON_COUNT] = {3, 5, 6, 9};
 
 Button button[BUTTON_COUNT] = {
   Button(3, 4, FRONT_LEFT),
@@ -12,9 +13,24 @@ Button button[BUTTON_COUNT] = {
   Button(9, 7, FRONT_RIGHT)
 };
 
+void startupSplash() {
+  for (int k = 0; k < 3; k++) {
+    for (int i = 0; i < BUTTON_COUNT; i++) {
+      for (int j = 0; j < 255; j += 5) {
+        analogWrite(ledPin[i], j);
+        delay(2);
+      }
+      for (int j = 255; j >= 0; j -= 5) {
+        analogWrite(ledPin[i], j);
+        delay(2  );
+      }
+    }
+  }
+}
+
 void setup() {
   Serial.begin(300);
-  //  Serial.println("Ready");
+  startupSplash();
 }
 
 void loop() {
